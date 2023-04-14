@@ -1,0 +1,13 @@
+{
+  "name": "TravelBack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:waldoapp/TravelBack.git",
+  "author": "Laurent <laurent@waldo.com>",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "koa": "^2.14.2",
+    "koa-router": "^12.0.0"
+  }
+}
