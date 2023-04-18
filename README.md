@@ -7,7 +7,8 @@ It is intended to demonstrate the different capabilities of Waldo when used with
 
 See the below list of endpoints and their purposes.
 
-It is deployed on Heroku and can be accessed at https://travel-back.herokuapp.com/
+It is deployed on [Heroku](https://dashboard.heroku.com/apps/travel-back) and can be accessed
+at https://travel-back.herokuapp.com/
 
 ### GET /validateEmail?email=$email
 
@@ -23,7 +24,8 @@ Below is a sample of queries with their responses.
 
 ```
 GET https://travel-back.herokuapp.com/validateEmail?email=laurent@waldo.com
-200 OK
+HTTP/1.1 200 OK
+
 {
   "success": true
 }
@@ -31,7 +33,8 @@ GET https://travel-back.herokuapp.com/validateEmail?email=laurent@waldo.com
 
 ```
 GET https://travel-back.herokuapp.com/validateEmail?email=laurent@icloud.com
-400 Bad Request
+HTTP/1.1 400 Bad Request
+
 {
   "success": false,
   "reason": "Domain icloud is not supported"
@@ -40,6 +43,19 @@ GET https://travel-back.herokuapp.com/validateEmail?email=laurent@icloud.com
 
 ```
 GET https://travel-back.herokuapp.com/validateEmail?email=laurent
-500 Internal Server Error
-Cannot read properties of null (reading '2')
+HTTP/1.1 500 Internal Server Error
+
+TypeError: Cannot read properties of null (reading '2')
+    at file:///app/index.js:22:27
+    at dispatch (/app/node_modules/koa-compose/index.js:42:32)
+    at /app/node_modules/koa-router/lib/router.js:425:16
+    at dispatch (/app/node_modules/koa-compose/index.js:42:32)
+    at /app/node_modules/koa-compose/index.js:34:12
+    at dispatch (/app/node_modules/koa-router/lib/router.js:430:31)
+    at dispatch (/app/node_modules/koa-compose/index.js:42:32)
+    at file:///app/index.js:37:13
+    at dispatch (/app/node_modules/koa-compose/index.js:42:32)
+    at /app/node_modules/koa-compose/index.js:34:12
+
+See more at https://github.com/waldoapp/TravelBack/blob/main/index.js#L22
 ```
