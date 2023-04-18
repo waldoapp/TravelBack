@@ -6,6 +6,9 @@
   "author": "Laurent <laurent@waldo.com>",
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": "^16"
+  },
   "dependencies": {
     "koa": "^2.14.2",
     "koa-router": "^12.0.0"
