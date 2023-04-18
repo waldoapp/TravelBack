@@ -5,7 +5,7 @@ import Router from 'koa-router';
 const app = new koa();
 const router = new Router();
 
-const GITHUB_REPO = 'waldoapp/TravelBack';
+const CWD = process.cwd();
 
 // This route is intentionally going to return 500s in some cases, in order to demonstrate how to
 // debug a server error right from Waldo Sessions using TravelSpot
@@ -44,9 +44,9 @@ app.use(async (ctx, next) => {
       // into the GitHub line that corresponds to it
       const stackLines = stack.split('\n');
       const match = /([^:(\s]+):(\d+):(\d+)(\)*)$/.exec(stackLines[1]);
-      if (match && match[1].includes(GITHUB_REPO)) {
-         const [,filePath] = match[1].split(GITHUB_REPO);
-         message += `\n\nSee more at https://github.com/${GITHUB_REPO}/blob/main${filePath}#L${match[2]}`;
+      if (match && match[1].includes(CWD)) {
+         const [,filePath] = match[1].split(CWD);
+         message += `\n\nSee more at https://github.com/waldoapp/TravelBack/blob/main${filePath}#L${match[2]}`;
       }
 
       ctx.body = message;
