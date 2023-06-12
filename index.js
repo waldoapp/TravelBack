@@ -7,6 +7,35 @@ const router = new Router();
 
 const CWD = process.cwd();
 
+function randomString (strLength, charSet) {
+   var result = [];
+   strLength = strLength || 5;
+   charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+   while (strLength--) { // (note, fixed typo)
+       result.push(charSet.charAt(Math.floor(Math.random() * charSet.length)));
+   }
+   return result.join('');
+}
+
+// This route is meant to demonstrate the API interaction in the TravelSpot demo
+router.post("/seedAccount", async (ctx) => {
+ const body = ctx.request.body;
+ const email = body.email ? body.email : ["test-", randomString(8), '@waldo.com'].join('');
+ const password = body.password ? body.password : randomString(8);
+ try{
+   const response = await axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key='+ process.env.FIREBASE_API_KEY, {
+       email: email,
+       password: password,
+       returnSecureToken: true,
+     });
+   ctx.status = response.status;
+   ctx.body = response.data;
+ }catch(e){
+   ctx.status = 422;
+   ctx.body = e.message;
+ }
+});
+
 // This route is intentionally going to return 500s in some cases, in order to demonstrate how to
 // debug a server error right from Waldo Sessions using TravelSpot
 router.get('/validateEmail', (ctx) => {
