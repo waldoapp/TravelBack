@@ -1,0 +1,11 @@
+node_modules/
+.idea
+
+
+
+# Only use prettier for js/ts for now
+**/*.json
+**/*.yml
+**/*.html
+**/*.md
+**/.eslintrc
