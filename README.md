@@ -63,7 +63,7 @@ See more at https://github.com/waldoapp/TravelBack/blob/main/index.js#L22
 
 ### POST /seedAccount
 
-This endpoint enables testing API interaction in TravelSpot with a usecase well known to our customers: seeding an account for signing up.
+This endpoint enables testing API interaction in TravelSpot with a usecase well known to our customers: seeding an account for signing in.
 
 It creates a fresh account with the optional parameters (`email` and `password`). In case those are not provided, random email and password are used (and returned!) to allow you to login in TravelSpot with your freshly created account.
 
