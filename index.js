@@ -1,7 +1,10 @@
 import koa from "koa";
 import Router from "koa-router";
+import bodyParser from "koa-bodyparser";
+import axios from "axios";
 
 const app = new koa();
+app.use(bodyParser());
 const router = new Router();
 
 const CWD = process.cwd();
@@ -21,9 +24,10 @@ function randomString(strLength, charSet) {
 router.post("/seedAccount", async (ctx) => {
   const body = ctx.request.body;
 
-  const email = body.email
-    ? body.email
-    : ["test-", randomString(8), "@waldo.com"].join("");
+  const email =
+    body && body.email
+      ? body.email
+      : ["test-", randomString(8), "@waldo.com"].join("");
   const password = body.password ? body.password : randomString(8);
   try {
     const response = await axios.post(
@@ -36,10 +40,16 @@ router.post("/seedAccount", async (ctx) => {
       }
     );
     ctx.status = response.status;
-    ctx.body = response.data;
+    ctx.body = { ...response.data, password };
   } catch (e) {
-    ctx.status = 422;
-    ctx.body = e.message;
+    ctx.status =
+      e.response && e.response.error && e.response.error.code
+        ? e.response.error.code
+        : 500;
+    ctx.body =
+      e.response && e.response.error && e.response.error.message
+        ? e.response.error.message
+        : "An error occured";
   }
 });
 
