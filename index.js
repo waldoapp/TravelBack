@@ -14,9 +14,8 @@ const CWD = process.cwd();
 router.post('/seedAccount', async (ctx) => {
   const body = ctx.request.body;
 
-  const email =
-    body && body.email ? body.email : ['test-', getRandomString(8), '@waldo.com'].join('');
-  const password = body.password ? body.password : getRandomString(8);
+  const email = body && body.email ? body.email : `test-${getRandomString(8)}waldo.com`;
+  const password = body && body.password ? body.password : getRandomString(8);
   try {
     const response = await axios.post(
       'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' +
