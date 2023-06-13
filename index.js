@@ -14,7 +14,7 @@ const CWD = process.cwd();
 router.post('/seedAccount', async (ctx) => {
   const body = ctx.request.body;
 
-  const email = body && body.email ? body.email : `test-${getRandomString(8)}waldo.com`;
+  const email = body && body.email ? body.email : `test-${getRandomString(8)}@waldo.com`;
   const password = body && body.password ? body.password : getRandomString(8);
   try {
     const response = await axios.post(
@@ -30,10 +30,12 @@ router.post('/seedAccount', async (ctx) => {
     ctx.body = { ...response.data, password };
   } catch (e) {
     ctx.status =
-      e.response && e.response.error && e.response.error.code ? e.response.error.code : 500;
+      e.response && e.response.data && e.response.data.error && e.response.data.error.code
+        ? e.response.data.error.code
+        : 500;
     ctx.body =
-      e.response && e.response.error && e.response.error.message
-        ? e.response.error.message
+      e.response && e.response.data && e.response.data.error && e.response.data.error.message
+        ? e.response.data.error.message
         : 'An error occured';
   }
 });
